@@ -8,6 +8,10 @@ namespace datalogi_inlamningEtt
         readonly PrimeNumbers prime = new();
         bool keepGoing = true;
 
+        /// <summary>
+        /// A method for the menu with a switch case for the different choices,
+        /// and that keeps going as long as the user wants to. 
+        /// </summary>
         public void MainMenu()
         {
             do {
@@ -30,7 +34,7 @@ namespace datalogi_inlamningEtt
                             {
                                 if (prime.AddNumberToList(userInput))
                                 {
-                                    ColorText.TextGreen("The number was added to the list.");
+                                    ColorText.TextGreen("The number was a prime number, and was added to the list.");
                                 }
                                 else
                                 {
@@ -39,7 +43,7 @@ namespace datalogi_inlamningEtt
                             }
                             else
                             {
-                                ColorText.TextRed("It's not a prime number fucktard. Go back to fifth grade idiot!");
+                                ColorText.TextRed("The number was not a prime number..");
                             }
                             Console.ReadKey();
                             break;

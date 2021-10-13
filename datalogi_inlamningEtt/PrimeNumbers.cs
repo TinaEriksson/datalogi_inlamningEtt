@@ -8,9 +8,13 @@ namespace datalogi_inlamningEtt
     {
         readonly List<int> primeNumbersList = new();
 
+        /// <summary>
+        /// Calculates if the number is a prime number, or not.
+        /// </summary>
+        /// <param name="userInput">The input from the user</param>
+        /// <returns>True if number is a prime number, and false if not.</returns>
         public bool CalculateIfPrimeNumber(int userInput)
         {
-            Console.Clear();
             if (userInput <= 1 || userInput != 2 && userInput % 2 == 0)
             {
                 return false;
@@ -28,6 +32,12 @@ namespace datalogi_inlamningEtt
             return true;
         }
 
+        /// <summary>
+        /// Adds a number to the list, if it does not alredy exist.
+        /// And then sorts the numbers in the list.
+        /// </summary>
+        /// <param name="number">The prime number to add to list.</param>
+        /// <returns>True if number did not alredy exist, and false if it did.</returns>
         public bool AddNumberToList(int number)
         {
             if (!primeNumbersList.Contains(number))
@@ -45,7 +55,6 @@ namespace datalogi_inlamningEtt
         /// </summary>
         public void ListAllPrimeNumber()
         {
-            Console.Clear();
             if (primeNumbersList.Count > 0)
             {
                 ColorText.TextYellow("The list contains the following prime numbers: ");
@@ -66,7 +75,9 @@ namespace datalogi_inlamningEtt
         }
 
         /// <summary>
-        /// 
+        /// Checks for the next number that is a prime number.
+        /// Adds the number to the list.
+        /// And when it's found, it returns the number to the menu class.
         /// </summary>
         public int CheckNextPrimenNumber()
         {
