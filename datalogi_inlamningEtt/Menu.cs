@@ -5,16 +5,15 @@ namespace datalogi_inlamningEtt
 {
     class Menu
     {
-        PrimeNumbers prime = new PrimeNumbers();
+        readonly PrimeNumbers prime = new();
         bool keepGoing = true;
-        ColorText text = new ColorText();
 
         public void MainMenu()
         {
             do {
                 Console.Clear();
                 Console.WriteLine("What do you want to do? \n");
-                text.TextYellow("[1] Check primenumber. \n[2] List primenumbers. " +
+                ColorText.TextYellow("[1] Check primenumber. \n[2] List primenumbers. " +
                     "\n[3] Check next primenumber. \n[0] Exit.");
                 Console.Write("\nChoice: ");
 
@@ -22,19 +21,25 @@ namespace datalogi_inlamningEtt
 
                 if (checkChoice)
                 {
-                    Console.Write("Enter number: ");
-                    var checkInput = int.TryParse(Console.ReadLine(), out int userInput);
-
                     switch (choice)
                     {
                         case 1:
-                           if (prime.CalculateIfPrimeNumber(userInput))
+                            Console.Write("Enter number: ");
+                            var checkInput = int.TryParse(Console.ReadLine(), out int userInput);
+                            if (prime.CalculateIfPrimeNumber(userInput))
                             {
-                                text.TextGreen("The number you entered was a prime number.");
+                                if (prime.AddNumberToList(userInput))
+                                {
+                                    ColorText.TextGreen("The number was added to the list.");
+                                }
+                                else
+                                {
+                                    ColorText.TextGreen("The number was a prime number but alredy existed in the list.");
+                                }
                             }
                             else
                             {
-                                text.TextRed("You did not enter a prime number.");
+                                ColorText.TextRed("It's not a prime number fucktard. Go back to fifth grade idiot!");
                             }
                             Console.ReadKey();
                             break;
@@ -42,18 +47,19 @@ namespace datalogi_inlamningEtt
                             prime.ListAllPrimeNumber();
                             break;
                         case 3:
-                            prime.CheckNextPrimenNumber();
+                            ColorText.TextYellow("The next prime number is: " + prime.CheckNextPrimenNumber());
+                            Console.ReadKey();
                             break;
                         case 0:
-                            Console.WriteLine("Goodbye");
+                            ColorText.TextYellow("Goodbye");
                             keepGoing = false;
-                            Environment.Exit(0);
+                            Console.ReadKey();
                             break;
                     }
                 }
                 else 
                 {
-                    text.TextRed("Wrong input. Press enter, and try again!");
+                    ColorText.TextRed("Wrong input. Press enter, and try again!");
                     Console.ReadKey();
                 }
 

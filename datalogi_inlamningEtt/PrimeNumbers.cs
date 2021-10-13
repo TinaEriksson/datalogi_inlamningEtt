@@ -6,53 +6,61 @@ namespace datalogi_inlamningEtt
 {
     class PrimeNumbers
     {
-        List<int> primeNumbersList = new List<int>();
-        ColorText text = new ColorText();
+        readonly List<int> primeNumbersList = new();
 
-        /// <summary>
-        /// Method that takes a input and checks if it's a prime number.
-        /// If true the number gets added to a list of prime-numbers.
-        /// </summary>
-        /// <returns>True if the input is a prime number, and false if it's not.</returns>
         public bool CalculateIfPrimeNumber(int userInput)
         {
             Console.Clear();
-
-            if (userInput <= 1)
+            if (userInput <= 1 || userInput != 2 && userInput % 2 == 0)
             {
                 return false;
             }
-            else if (userInput != 2 && userInput % 2 == 0)
+            else
             {
-                return false;
-            }
-            for (int i = 3; i < userInput; i++)
-            {
-                if(userInput %i == 0)
+                for (int i = 3; i < userInput; i++)
                 {
-                    return false;
+                    if (userInput % i == 0)
+                    {
+                        return false;
+                    }
                 }
             }
-            primeNumbersList.Add(userInput);
             return true;
+        }
+
+        public bool AddNumberToList(int number)
+        {
+            if (!primeNumbersList.Contains(number))
+            {
+                primeNumbersList.Add(number);
+                primeNumbersList.Sort();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Lists all the numbers in the list of prime numbers.
+        /// If the list is empty, a message will be printed.
         /// </summary>
         public void ListAllPrimeNumber()
         {
             Console.Clear();
-
-
-            text.TextYellow("The list contains the following prime-numbers: ");
-            foreach (var number in primeNumbersList)
+            if (primeNumbersList.Count > 0)
             {
-                text.TextCyan(number);
-                if(number != primeNumbersList[^1])
+                ColorText.TextYellow("The list contains the following prime numbers: ");
+                foreach (var number in primeNumbersList)
                 {
-                    Console.Write(" | ");
-                } 
+                    ColorText.TextCyan(number);
+                    if (number != primeNumbersList[^1])
+                    {
+                        Console.Write(" | ");
+                    }
+                }
+            }
+            else
+            {
+                ColorText.TextRed("The list does not contain any prime numbers.");
             }
             Console.ReadKey();
         }
@@ -60,19 +68,26 @@ namespace datalogi_inlamningEtt
         /// <summary>
         /// 
         /// </summary>
-        public void CheckNextPrimenNumber()
+        public int CheckNextPrimenNumber()
         {
-            if(primeNumbersList.Count != 0)
+            bool found = false;
+            int highestNumber = 0;
+
+            if (primeNumbersList.Count > 0)
             {
-                primeNumbersList.Sort();
-                int highestNumber = primeNumbersList.Last();
+                highestNumber = primeNumbersList.Last();
             }
+            while (!found)
+            {
+                highestNumber++;
+                if (CalculateIfPrimeNumber(highestNumber))
+                {
+                    AddNumberToList(highestNumber);
+                    found = true;
+                }
+            }
+            return highestNumber;
 
-         
-
-
-
-          Console.ReadKey();
         }
     }
 }
